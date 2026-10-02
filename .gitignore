@@ -1,0 +1,7 @@
+**/bin/
+**/obj/
+**/TestResults/
+*.nupkg
+.env
+.env.local
+node_modules/

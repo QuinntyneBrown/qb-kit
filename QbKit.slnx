@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/QbKit/QbKit.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/QbKit.Tests/QbKit.Tests.csproj" />
+  </Folder>
+</Solution>
