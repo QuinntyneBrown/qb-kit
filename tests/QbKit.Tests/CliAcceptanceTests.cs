@@ -3,7 +3,7 @@ using System.Diagnostics;
 namespace QbKit.Tests;
 
 // Acceptance Test
-// Traces to: L2-001, L2-002, L2-003, L2-004, L2-005, L2-006
+// Traces to: L2-001, L2-002, L2-003, L2-004, L2-005, L2-006, L2-008
 // Description: The command creates a verified Angular workspace and protects existing files.
 public sealed class CliAcceptanceTests
 {
@@ -71,12 +71,35 @@ public sealed class CliAcceptanceTests
         var workspace = Path.Combine(parent, "sample-app");
         Assert.True(File.Exists(Path.Combine(workspace, "projects", "sample-app", "src", "app", "app.scss")));
         Assert.True(File.Exists(Path.Combine(workspace, "jest.config.cjs")));
+        AssertCounterComponent(workspace);
         Assert.True(File.Exists(Path.Combine(workspace, "eslint.config.js")));
         Assert.True(File.Exists(Path.Combine(workspace, "package-lock.json")));
         File.AppendAllText(Path.Combine(workspace, "README.md"), "  badly formatted  ");
         var formatResult = await RunNpmAsync(workspace, "run", "format:check");
         Assert.NotEqual(0, formatResult.ExitCode);
         Directory.Delete(parent, recursive: true);
+    }
+
+    private static void AssertCounterComponent(string workspace)
+    {
+        var appDirectory = Path.Combine(workspace, "projects", "sample-app", "src", "app");
+        var appHtml = File.ReadAllText(Path.Combine(appDirectory, "app.html"));
+        Assert.Contains("<app-counter", appHtml);
+
+        var counterDirectory = Path.Combine(appDirectory, "counter");
+        var counterComponentPath = Path.Combine(counterDirectory, "counter.ts");
+        Assert.True(File.Exists(counterComponentPath));
+        var counterComponent = File.ReadAllText(counterComponentPath);
+        Assert.Contains("export class Counter", counterComponent);
+        Assert.Contains("increment", counterComponent);
+        Assert.Contains("decrement", counterComponent);
+
+        var counterStyles = File.ReadAllText(Path.Combine(counterDirectory, "counter.scss"));
+        Assert.Contains("var(--qb-", counterStyles);
+        Assert.Contains("flex-wrap", counterStyles);
+
+        var globalStyles = File.ReadAllText(Path.Combine(workspace, "projects", "sample-app", "src", "styles.scss"));
+        Assert.Contains("--qb-space", globalStyles);
     }
 
     private static Task<(int ExitCode, string Output)> RunAsync(params string[] arguments) =>

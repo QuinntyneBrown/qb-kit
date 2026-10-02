@@ -42,6 +42,6 @@ public sealed class PrerequisiteAcceptanceTests
     private static WorkspaceGenerator CreateGenerator(FakeProcessRunner runner)
     {
         var options = Options.Create(new ToolingOptions { Angular = "22.2.1", AngularEslint = "22.5.0", Jest = "30.5.2", JestPreset = "17.0.1" });
-        return new WorkspaceGenerator(runner, new WorkspaceConfigurator(options), options, NullLogger<WorkspaceGenerator>.Instance);
+        return new WorkspaceGenerator(runner, new WorkspaceConfigurator(options), new CounterComponentScaffolder(), options, NullLogger<WorkspaceGenerator>.Instance);
     }
 }

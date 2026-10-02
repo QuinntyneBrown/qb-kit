@@ -4,7 +4,7 @@ using QbKit.Processes;
 
 namespace QbKit.New;
 
-public sealed class WorkspaceGenerator(IProcessRunner runner, WorkspaceConfigurator configurator, IOptions<ToolingOptions> options, ILogger<WorkspaceGenerator> logger)
+public sealed class WorkspaceGenerator(IProcessRunner runner, WorkspaceConfigurator configurator, CounterComponentScaffolder counterScaffolder, IOptions<ToolingOptions> options, ILogger<WorkspaceGenerator> logger)
 {
     private static readonly HashSet<string> ReservedNames = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -54,6 +54,9 @@ public sealed class WorkspaceGenerator(IProcessRunner runner, WorkspaceConfigura
 
             step = "configuring development tools";
             configurator.Configure(destination, name);
+
+            step = "scaffolding counter component";
+            counterScaffolder.Scaffold(destination, name);
 
             step = "installing npm dependencies";
             await RunStepAsync(step, destination, ["install"], cancellationToken);

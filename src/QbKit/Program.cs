@@ -11,6 +11,7 @@ builder.Logging.SetMinimumLevel(verbose ? LogLevel.Information : LogLevel.Warnin
 builder.Services.AddSingleton<IProcessRunner, ProcessRunner>();
 builder.Services.AddSingleton<WorkspaceGenerator>();
 builder.Services.AddSingleton<WorkspaceConfigurator>();
+builder.Services.AddSingleton<CounterComponentScaffolder>();
 builder.Services.AddSingleton<NewCommand>();
 builder.Services.AddOptions<ToolingOptions>().Configure(options =>
 {
