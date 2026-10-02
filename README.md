@@ -23,7 +23,7 @@ eng\scripts\install-cli.bat
 sh eng/scripts/install-cli.sh
 ```
 
-Each script packs the current source, installs it into this repository's `.tools` directory, replaces an earlier local install, and checks the installed command's version. The scripts leave any globally installed `qb-kit` unchanged. Run the installed command as `.tools/qb-kit` on macOS or Linux, or `.tools\qb-kit.exe` on Windows.
+Each script packs the current source, installs it into this repository's `.tools` directory, replaces an earlier local install, and checks the installed command's version. The scripts leave any globally installed `qb-kit` unchanged. Run the installed command as `./.tools/qb-kit` on macOS or Linux, or `.\.tools\qb-kit.exe` in PowerShell.
 
 To run the repository tests separately:
 
@@ -34,7 +34,7 @@ dotnet test QbKit.slnx
 ## Create a workspace
 
 ```sh
-.tools/qb-kit new my-workspace
+./.tools/qb-kit new my-workspace
 cd my-workspace
 npm start
 ```

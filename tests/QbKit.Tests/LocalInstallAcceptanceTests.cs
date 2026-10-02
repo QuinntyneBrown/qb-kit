@@ -33,6 +33,7 @@ public sealed class LocalInstallAcceptanceTests
                 var version = await RunAsync(executable, temporaryDirectory);
                 Assert.Equal(0, version.ExitCode);
                 Assert.Equal(expectedVersion, version.Output.Trim().Split('+')[0]);
+
             }
         }
         finally
