@@ -1,9 +1,10 @@
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using QbKit.Processes;
 
 namespace QbKit.New;
 
-public sealed class WorkspaceGenerator(IProcessRunner runner, WorkspaceConfigurator configurator, IOptions<ToolingOptions> options)
+public sealed class WorkspaceGenerator(IProcessRunner runner, WorkspaceConfigurator configurator, IOptions<ToolingOptions> options, ILogger<WorkspaceGenerator> logger)
 {
     private static readonly HashSet<string> ReservedNames = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -87,6 +88,7 @@ public sealed class WorkspaceGenerator(IProcessRunner runner, WorkspaceConfigura
     private async Task RunStepAsync(string step, string directory, IReadOnlyList<string> arguments, CancellationToken cancellationToken)
     {
         Console.WriteLine($"{step}...");
+        logger.LogInformation("Running npm {Arguments} in {Directory}", string.Join(' ', arguments), directory);
         var exitCode = await runner.RunAsync("npm", arguments, directory, cancellationToken);
         if (exitCode != 0) throw new InvalidOperationException($"npm exited with code {exitCode}.");
     }
