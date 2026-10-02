@@ -3,8 +3,8 @@ using System.Diagnostics;
 namespace QbKit.Tests;
 
 // Acceptance Test
-// Traces to: L2-001, L2-002, L2-006
-// Description: The packaged command exposes help and refuses unsafe names and destinations.
+// Traces to: L2-001, L2-002, L2-003, L2-004, L2-005, L2-006
+// Description: The command creates a verified Angular workspace and protects existing files.
 public sealed class CliAcceptanceTests
 {
     [Fact]
