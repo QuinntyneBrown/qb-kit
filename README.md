@@ -9,18 +9,32 @@
 
 ## Build and install locally
 
-```sh
-dotnet test QbKit.slnx
-dotnet pack src/QbKit/QbKit.csproj -c Release -o nupkg
-dotnet tool install --global qb-kit --version 0.1.0 --add-source nupkg
+Run the installer for your shell from any working directory:
+
+```powershell
+./eng/scripts/install-cli.ps1
 ```
 
-If a different `qb-kit` package is already installed, remove or update it before installing the local package.
+```bat
+eng\scripts\install-cli.bat
+```
+
+```sh
+sh eng/scripts/install-cli.sh
+```
+
+Each script packs the current source, installs it into this repository's `.tools` directory, replaces an earlier local install, and checks the installed command's version. The scripts leave any globally installed `qb-kit` unchanged. Run the installed command as `.tools/qb-kit` on macOS or Linux, or `.tools\qb-kit.exe` on Windows.
+
+To run the repository tests separately:
+
+```sh
+dotnet test QbKit.slnx
+```
 
 ## Create a workspace
 
 ```sh
-qb-kit new my-workspace
+.tools/qb-kit new my-workspace
 cd my-workspace
 npm start
 ```
